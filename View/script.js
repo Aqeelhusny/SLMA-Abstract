@@ -43,3 +43,5 @@ if (localStorage.getItem("screen") == "dashboard") {
 
   movePage(dashboard_screens[0]);
 }
+
+console.log(location.search);

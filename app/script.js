@@ -17,8 +17,11 @@ if (localStorage.getItem("screen") == "login") {
 if (localStorage.getItem("screen") == "dashboard") {
   const track_submission_btn = document.getElementById("track_submission_btn");
   const submit_abstract_btn = document.getElementById("submit_abstract_btn");
+  const user_profile_btn = document.getElementById("user_profile_btn");
+  const contact_us_btn = document.getElementById("contact_us_btn");
+  
 
-  let dashboard_screens = ["track_submission", "submit_abstract"];
+  let dashboard_screens = ["track_submission", "submit_abstract","user_profile","contact_us"];
 
   function movePage(screen_id) {
     for (let index = 0; index < dashboard_screens.length; index++) {
@@ -39,6 +42,16 @@ if (localStorage.getItem("screen") == "dashboard") {
 
   submit_abstract_btn.addEventListener("click", function () {
     movePage("submit_abstract");
+  });
+
+  user_profile_btn.addEventListener("click", function () {
+    movePage("user_profile");
+    
+  });
+
+  contact_us_btn.addEventListener("click", function () {
+    movePage("contact_us");
+    
   });
 
   movePage(dashboard_screens[0]);

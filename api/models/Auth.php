@@ -1,4 +1,6 @@
 <?php
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/api/utils/send_mail.php';
 class Auth
 {
 
@@ -98,14 +100,7 @@ class Auth
 
     public function register()
     {
-        $query = 'SELECT * FROM ' . $this->table . ' WHERE email = ?';
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('s', $this->email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $stmt->close();
-            $this->message = array('message' => 'User already exists', 'status' => 409);
+        if ($this->isUserExist()) {
             return false;
         }
         $query = 'INSERT INTO ' . $this->table . ' (title,first_name, last_name,qualification,phone,whatsapp_no,
@@ -135,5 +130,32 @@ class Auth
             $this->message = array('message' => 'Registration failed !', 'status' => 500);
             return false;
         }
+    }
+
+    public function isUserExist()
+    {
+        $query = 'SELECT * FROM ' . $this->table . ' WHERE email = ?';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('s', $this->email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if ($result->num_rows > 0) {
+            $this->message = array('message' => 'User already exists', 'status' => 409);
+            return true;
+        }
+        return false;
+    }
+
+    public function sendVerificationCode($email)
+    {
+        $verification_code = mt_rand(100000, 999999);
+        $sendMail = new EmailService();
+        $sendMail::sendEmail(
+            "SLMA Verification Code",
+            "Your verification code is " . $verification_code,
+            array("emails" => array($email))
+        );
+        return $verification_code;
     }
 }

@@ -35,6 +35,11 @@ switch ($path) {
         $controller = new AuthController($auth);
         $controller->register($_SERVER['REQUEST_METHOD']);
         break;
+    case 'sendVerificationEmail':
+        $auth = new Auth($db);
+        $controller = new AuthController($auth);
+        $controller->sendVerificationEmail($_SERVER['REQUEST_METHOD']);
+        break;
     default:
         http_response_code(404);
         echo json_encode(array('status' => 404, 'message' => 'Page not found'));

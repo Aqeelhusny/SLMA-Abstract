@@ -92,4 +92,20 @@ class AuthController
             echo json_encode(array('message' => 'Page not found'));
         }
     }
+
+    public function sendVerificationEmail(string $method)
+    {
+        if ($method == 'POST') {
+            $data = json_decode(file_get_contents("php://input"));
+            if (!isset($data->email))
+                echo json_encode(array('message' => 'Email is required'));
+            $code = $this->auth->sendVerificationCode($data->email);
+            if ($code != null) {
+                echo json_encode(array(
+                    'verification_code' => $code,
+                    'message' => 'verification code sent to your email',
+                ), JSON_PRETTY_PRINT);
+            }
+        }
+    }
 }

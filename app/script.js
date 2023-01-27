@@ -1,4 +1,4 @@
-//Path : View/Login.html
+//Path : app/Login.html
 if (localStorage.getItem("screen") == "login") {
   const login_btn = document.getElementById("login_btn");
   login_btn.addEventListener("click", function () {
@@ -8,11 +8,11 @@ if (localStorage.getItem("screen") == "login") {
   function login() {
     //const email = document.getElementById("email").value;
     //const password = document.getElementById("password").value;
-    window.location.href = "/View/dashboard.html";
+    window.location.href = "/app/dashboard.html";
   }
 }
 
-//Path: View/dashboard.html
+//Path: app/dashboard.html
 
 if (localStorage.getItem("screen") == "dashboard") {
   const track_submission_btn = document.getElementById("track_submission_btn");

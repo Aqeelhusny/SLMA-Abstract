@@ -6,9 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-        window.location.href = "/View/login.html";
+        if (localStorage.getItem('token') == null) {
+            window.location.href = '/app/login.html';
+        } else {
+            window.location.href = '/app/dasboard.html';
+        }
     </script>
-    <title>Document</title>
+    <title>SLMA</title>
 </head>
 
 <body>

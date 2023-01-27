@@ -26,23 +26,23 @@
                 <p>Abstract Submission Portal</p>
 
               </div>
-              <form>
+              <form id="login_form">
                 <div class="form-group">
                   <label for="inputEmail" class="col col-form-label">Email address</label>
                   <div class="col">
-                    <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com" required>
+                    <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label for="inputPassword" class="col col-form-label">Password</label>
                   <div class="col">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
                   </div>
                 </div>
                 </br>
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary btn-primary px-5 justify-content-center"
+                  <button type="submit" class="btn btn-primary btn-primary px-5 justify-content-center"
                     id="login_btn">Login</button>
                   <p class="mt-2 pt-2"><a href="#!">Forgot password?</a></p>
                   <p>Dont have an account? <a href="/app/signup.html">Register</a></p>

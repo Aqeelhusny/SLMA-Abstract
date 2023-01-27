@@ -1,15 +1,33 @@
+const URL = "http://127.0.0.1:8000/";
+
 //Path : app/Login.html
 if (localStorage.getItem("screen") == "login") {
-  const login_btn = document.getElementById("login_btn");
-  login_btn.addEventListener("click", function () {
-    login();
+  const login_form = document.getElementById("login_form");
+  login_form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    await fetch(URL + "api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data["response"]["status"] == 200) {
+          window.location.href = "/app/dashboard.html";
+        } else if (data["response"]["status"] == 404) {
+          alert(data["response"]["message"]);
+        } else {
+          alert("Something went wrong");
+        }
+      });
   });
-
-  function login() {
-    //const email = document.getElementById("email").value;
-    //const password = document.getElementById("password").value;
-    window.location.href = "/app/dashboard.html";
-  }
 }
 
 //Path: app/dashboard.html

@@ -92,3 +92,9 @@ div.content {
     float: none;
   }
 }
+/*dashboard contact us vertical line*/
+.vertical {
+  border-left: 3px solid rgb(149, 149, 149);
+  margin: 3px;
+  left: 50%;
+}

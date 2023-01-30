@@ -141,7 +141,7 @@ class Auth
         $result = $stmt->get_result();
         $stmt->close();
         if ($result->num_rows > 0) {
-            $this->message = array('message' => 'User already exists', 'status' => 409);
+            $this->message = array('message' => 'User already exists with this email', 'status' => 409);
             return true;
         }
         return false;
@@ -149,13 +149,29 @@ class Auth
 
     public function sendVerificationCode($email)
     {
+        if ($this->isUserExist()) {
+            return 409;
+        }
         $verification_code = mt_rand(100000, 999999);
         $sendMail = new EmailService();
-        $sendMail::sendEmail(
-            "SLMA Verification Code",
-            "Your verification code is " . $verification_code,
-            array("emails" => array($email))
-        );
+        try {
+            $sendMail::sendEmail(
+                "SLMA Verification Code",
+                "Your verification code is " . $verification_code,
+                array("emails" => array($email))
+            );
+            $this->message = array(
+                'message' => 'verification code sent to your email',
+                'status' => 200,
+                'verification_code' => $verification_code,
+            );
+        } catch (Exception $e) {
+            $this->message = array(
+                'message' => 'verification code sending failed ! ' . $e->getMessage(),
+                'status' => 500,
+            );
+            return 404;
+        }
         return $verification_code;
     }
 }

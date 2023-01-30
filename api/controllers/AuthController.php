@@ -97,14 +97,21 @@ class AuthController
     {
         if ($method == 'POST') {
             $data = json_decode(file_get_contents("php://input"));
-            if (!isset($data->email))
-                echo json_encode(array('message' => 'Email is required'));
+            if (!isset($data->email)) {
+                echo json_encode(array("response" => array('message' => 'Email is required', 'status' => '400')));
+                return;
+            }
+
+            $this->auth->email = $data->email;
             $code = $this->auth->sendVerificationCode($data->email);
-            if ($code != null) {
-                echo json_encode(array(
-                    'verification_code' => $code,
-                    'message' => 'verification code sent to your email',
-                ), JSON_PRETTY_PRINT);
+            if ($code != 0 || $code != null || $this->auth->message['status'] == 409) {
+                http_response_code($this->auth->message['status']);
+                echo json_encode(
+                    array("response" => $this->auth->message)
+                );
+            } else {
+                http_response_code(404);
+                echo json_encode(array("response" => array('message' => 'Something went wrong , Please check your internet connection !', 'status' => 404)));
             }
         }
     }

@@ -28,18 +28,17 @@ class EmailService
         $mail->Password   = 'ddduxwdxgwoqalro';
         $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
+        $mail->From = "companysf6@gmail.com";
 
         //Recipients
         $mail->setFrom('companysf6@gmail.com', 'SLMA');
         foreach ($recipents["emails"] as $email) {
             $mail->addAddress($email);
         }
-
         // Content
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body    = $body;
-
         $mail->send();
     }
 }
